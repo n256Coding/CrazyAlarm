@@ -18,10 +18,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COL_4 = "alarm_sound";
 
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE "+TABLE_NAME+" (" +
-            COL_1 +"INTEGER PRIMARY KEY AUTOINCREMENT," +
-            COL_2 +"DATETIME," +
-            COL_3 +"TEXT," +
-            COL_4 +"TEXT)";
+            COL_1 +" INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COL_2 +" DATETIME," +
+            COL_3 +" TEXT," +
+            COL_4 +" TEXT)";
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE "+TABLE_NAME;
 
 

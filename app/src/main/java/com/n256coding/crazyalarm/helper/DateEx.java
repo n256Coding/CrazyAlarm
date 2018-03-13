@@ -123,6 +123,32 @@ public class DateEx extends Date {
     }
 
     /**
+     *
+     * @return hour of day
+     */
+    public static int getCurrentHourOfDay(){
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    }
+
+    /**
+     *
+     * @return current minute
+     */
+    public static int getCurrentMinute(){
+        return Calendar.getInstance().get(Calendar.MINUTE);
+    }
+
+    public static Date getAlarmDateOf(int hourOfDay, int minute){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        if(calendar.before(new Date())){
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return calendar.getTime();
+    }
+
+    /**
      * @param date String date Ex. 2017-9-3
      * @return formatted string Ex. 2017-09-03
      * @throws ParseException
