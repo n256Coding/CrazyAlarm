@@ -1,6 +1,7 @@
 package com.n256coding.crazyalarm;
 
 import android.app.TimePickerDialog;
+import android.media.MediaPlayer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,18 +39,11 @@ public class MainActivity extends AppCompatActivity {
         lvAlarmList = findViewById(R.id.lv_alarmList);
         fabAddAlarm = findViewById(R.id.fab_addAlarm);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
-        List<String> test = new ArrayList<>();
-        test.add("2015/12/23 8.30pm");
-        test.add("2016/03/04 12.50pm");
-        test.add("2013/05/08 4.25pm");
-        arrayAdapter.addAll(test);
-
         List<Alarm> alarmList = new ArrayList<>();
         try {
             alarmList = Alarm.getAllAlarms(getApplicationContext());
         } catch (ParseException e) {
-            Log.i(TAG, "Error while date parsing", e);
+            Log.e(TAG, "Error while date parsing", e);
         }
 
         final CustomAdapter customAdapter = new CustomAdapter(alarmList);
@@ -72,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                                         Log.i(TAG, "Error while date parsing", e);
                                     }
                                     customAdapter.notifyDataSetChanged();
+                                    customAdapter.notifyItemInserted(customAdapter.getItemCount());
                                     Toast.makeText(MainActivity.this, "Alarm placed", Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -82,9 +77,5 @@ public class MainActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-
-        //AlarmActivator activator = new AlarmActivator();
-        //activator.activeAlarm(MainActivity.this, new Alarm(calendar.getTime(), "Hola", "Tweet"));
-
     }
 }

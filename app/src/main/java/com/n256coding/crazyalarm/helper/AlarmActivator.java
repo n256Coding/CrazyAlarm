@@ -19,7 +19,7 @@ public class AlarmActivator {
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.getAlarmTime().getTime(), pendingIntent);
     }
 
-    public static void cancelAlarm(Context context, Alarm alarm) {
+    public static void cancelAlarm(Context context, int alarmId) {
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

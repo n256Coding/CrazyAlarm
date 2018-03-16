@@ -3,8 +3,10 @@ package com.n256coding.crazyalarm.adapters;
 import android.app.TimePickerDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -37,6 +39,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(CustomAdapter.ViewHolder holder, int position) {
         holder.tvAlarmTime.setText(DateEx.getTimeString(alarmList.get(position).getAlarmTime()));
+        holder.itemView.setTag(alarmList.get(position).getAlarmId());
     }
 
     @Override
@@ -67,13 +70,35 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                                     alarmList.set(getAdapterPosition(), oldAlarm);
                                     Alarm.changeAlarm(timePicker.getContext(), newAlarm, oldAlarm);
                                     Toast.makeText(timePicker.getContext(), "Alarm Changed", Toast.LENGTH_LONG).show();
-                                    notifyDataSetChanged();
+                                    notifyItemChanged(getAdapterPosition());
                                 }
                             },
                             DateEx.getCurrentHourOfDay(),
                             DateEx.getCurrentMinute(), false
                     );
                     timePicker.show();
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(final View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    popupMenu.getMenuInflater().inflate(R.menu.alarm_item_context_menu, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            if(menuItem.getItemId() == R.id.menuItemRemove){
+                                Alarm.removeAlarm(view.getContext(),
+                                        Integer.parseInt(String.valueOf(view.getTag())));
+                                alarmList.remove(getAdapterPosition());
+                                notifyItemRemoved(getAdapterPosition());
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
+                    return false;
                 }
             });
 

@@ -142,6 +142,7 @@ public class DateEx extends Date {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
         if(calendar.before(new Date())){
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }

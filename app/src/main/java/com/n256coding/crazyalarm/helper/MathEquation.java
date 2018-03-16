@@ -7,12 +7,14 @@ public class MathEquation {
     private Random random;
     private double[] equation;
     private String mathOperator;
+    String[] mathOperators;
     private double[] answers;
 
     public MathEquation() {
         random = new Random();
         equation = new double[3];
         answers = new double[4];
+        mathOperators = new String[]{"+", "-", "*"};
         generateEquation();
     }
 
@@ -33,31 +35,19 @@ public class MathEquation {
         generateAnswers();
     }
 
-    public String generateMathOperator(){
-        switch (random.nextInt(3)) {
-            case 0:
-                return "+";
-            case 1:
-                return "-";
-            case 2:
-                return "*";
-            default:
-                return "";
-        }
+    public String generateMathOperator() {
+        return mathOperators[random.nextInt(3)];
     }
 
-    public double[] generateAnswers() {
-
+    public void generateAnswers() {
         int correctAnswerPosition = random.nextInt(4);
         for (int i = 0; i < answers.length; i++) {
             if (i != correctAnswerPosition) {
                 answers[i] = getRelatedNumber(equation[2]);
-            }
-            else{
+            } else {
                 answers[i] = equation[2];
             }
         }
-        return answers;
     }
 
     public double getRelatedNumber(double number) {
@@ -74,20 +64,20 @@ public class MathEquation {
         return number;
     }
 
-    public void refreshEquation(){
+    public void refreshEquation() {
         generateEquation();
     }
 
-    public double getCorrectAnswer(){
+    public double getCorrectAnswer() {
         return equation[2];
     }
 
-    public double[] getAnswerChoices(){
+    public double[] getAnswerChoices() {
         return answers;
     }
 
     @Override
     public String toString() {
-        return equation[0]+" "+mathOperator+" "+equation[1];
+        return equation[0] + " " + mathOperator + " " + equation[1];
     }
 }

@@ -106,10 +106,10 @@ public class Alarm implements Parcelable {
         return false;
     }
 
-    public static boolean removeAlarm(Context context, Alarm alarm) {
+    public static boolean removeAlarm(Context context, int alarmId) {
         DBHelper db = new DBHelper(context);
-        if (db.delete(alarm.getAlarmId())) {
-            AlarmActivator.cancelAlarm(context, alarm);
+        if (db.delete(alarmId)) {
+            AlarmActivator.cancelAlarm(context, alarmId);
             return true;
         }
         return false;
