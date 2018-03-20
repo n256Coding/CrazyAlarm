@@ -5,9 +5,9 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.rtp.AudioStream;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.n256coding.crazyalarm.AlarmViewerActivity;
 import com.n256coding.crazyalarm.R;
 
+import java.io.IOException;
+
 public class AlarmService extends Service {
     private static final String TAG = "AlarmService";
 
@@ -27,8 +29,8 @@ public class AlarmService extends Service {
     private Vibrator vibrator;
     private NotificationManagerCompat notificationManager;
 
-    public class AlarmServiceBinder extends Binder{
-        public AlarmService getService(){
+    public class AlarmServiceBinder extends Binder {
+        public AlarmService getService() {
             return AlarmService.this;
         }
     }
@@ -40,7 +42,28 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        player = MediaPlayer.create(getApplicationContext(), R.raw.rooster);
+        player = new MediaPlayer();
+        if (Build.VERSION.SDK_INT < 26) {
+            player.setAudioStreamType(AudioManager.STREAM_ALARM);
+        } else {
+            player.setAudioAttributes(new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
+                    .build()
+            );
+        }
+
+        try {
+            player.setDataSource(getApplicationContext(),
+                    Uri.parse("android.resource://" +
+                            getApplicationContext().getPackageName() +
+                            "/" + R.raw.rooster)
+            );
+        } catch (IOException e) {
+            Log.e(TAG, "Error parsing alarm sound uri", e);
+        }
+
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         Intent viewerIntent = new Intent(AlarmService.this, AlarmViewerActivity.class);
         PendingIntent alarmUiShowIntent = PendingIntent.getActivity(AlarmService.this,
@@ -74,22 +97,23 @@ public class AlarmService extends Service {
         Toast.makeText(AlarmService.this, "Service Stopped", Toast.LENGTH_LONG).show();
     }
 
-    public void startAlarmSound(){
-        if(!player.isPlaying()){
+    public void startAlarmSound() throws IOException {
+        if (!player.isPlaying()) {
             //TODO vibrator.vibrate(500) is deprecated
             vibrator.vibrate(500);
             player.setLooping(true);
+            player.prepare();
             player.start();
         }
     }
 
-    public void stopAlarmSound(){
-        if(player.isPlaying()){
+    public void stopAlarmSound() {
+        if (player.isPlaying()) {
             player.stop();
         }
     }
 
-    public void removeNotification(){
+    public void removeNotification() {
         notificationManager.cancel(0);
     }
 

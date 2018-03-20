@@ -11,7 +11,7 @@ import com.n256coding.crazyalarm.recievers.AlarmReceiver;
 
 public class AlarmActivator {
 
-    public static void activeAlarm(Context context, Alarm alarm) {
+    public static void activateAlarm(Context context, Alarm alarm) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("alarm", alarm);

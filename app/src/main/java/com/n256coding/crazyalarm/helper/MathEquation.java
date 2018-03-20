@@ -7,7 +7,7 @@ public class MathEquation {
     private Random random;
     private double[] equation;
     private String mathOperator;
-    String[] mathOperators;
+    private String[] mathOperators;
     private double[] answers;
 
     public MathEquation() {
@@ -72,8 +72,11 @@ public class MathEquation {
         return equation[2];
     }
 
-    public double[] getAnswerChoices() {
-        return answers;
+    public double getAnswerChoice(int i) {
+        if (i < 4) {
+            return Math.round(answers[i] * 100) / 100;
+        }
+        return 0;
     }
 
     @Override

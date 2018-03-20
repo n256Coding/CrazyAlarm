@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.n256coding.crazyalarm.helper.MathEquation;
 import com.n256coding.crazyalarm.services.AlarmService;
+
+import java.io.IOException;
 
 
 public class AlarmViewerActivity extends AppCompatActivity {
@@ -23,6 +26,7 @@ public class AlarmViewerActivity extends AppCompatActivity {
     String correctAnswerHint, wrongAnswerHint;
     AlarmService alarmService;
     boolean isServiceBounded;
+    private static final String TAG = "AlarmViewerActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +92,7 @@ public class AlarmViewerActivity extends AppCompatActivity {
         Toast.makeText(AlarmViewerActivity.this, "Solve the puzzle!", Toast.LENGTH_LONG).show();
     }
 
-    private void startAlarmSound(){
+    private void startAlarmSound() throws IOException {
         if (isServiceBounded) {
             alarmService.startAlarmSound();
         }
@@ -97,10 +101,10 @@ public class AlarmViewerActivity extends AppCompatActivity {
     private void fillEquationInfo() {
         mathEquation.refreshEquation();
         tvEquation.setText(mathEquation.toString().concat(" = ?"));
-        btnAnswer1.setText(String.valueOf(mathEquation.getAnswerChoices()[0]));
-        btnAnswer2.setText(String.valueOf(mathEquation.getAnswerChoices()[1]));
-        btnAnswer3.setText(String.valueOf(mathEquation.getAnswerChoices()[2]));
-        btnAnswer4.setText(String.valueOf(mathEquation.getAnswerChoices()[3]));
+        btnAnswer1.setText(String.valueOf(mathEquation.getAnswerChoice(0)));
+        btnAnswer2.setText(String.valueOf(mathEquation.getAnswerChoice(1)));
+        btnAnswer3.setText(String.valueOf(mathEquation.getAnswerChoice(2)));
+        btnAnswer4.setText(String.valueOf(mathEquation.getAnswerChoice(3)));
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -109,7 +113,11 @@ public class AlarmViewerActivity extends AppCompatActivity {
             AlarmService.AlarmServiceBinder binder = (AlarmService.AlarmServiceBinder) iBinder;
             alarmService = binder.getService();
             isServiceBounded = true;
-            startAlarmSound();
+            try {
+                startAlarmSound();
+            } catch (IOException e) {
+                Log.e(TAG, "Error while playing alarm", e);
+            }
         }
 
         @Override

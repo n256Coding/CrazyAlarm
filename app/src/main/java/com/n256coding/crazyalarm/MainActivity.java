@@ -1,6 +1,8 @@
 package com.n256coding.crazyalarm;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         lvAlarmList = findViewById(R.id.lv_alarmList);
         fabAddAlarm = findViewById(R.id.fab_addAlarm);
 
+
         List<Alarm> alarmList = new ArrayList<>();
         try {
             alarmList = Alarm.getAllAlarms(getApplicationContext());
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
-                        1,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int i, int i1) {
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         DateEx.getCurrentHourOfDay(),
                         DateEx.getCurrentMinute(),
                         false);
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePickerDialog.show();
             }
         });

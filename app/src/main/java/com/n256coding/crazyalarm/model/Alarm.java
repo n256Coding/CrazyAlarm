@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.n256coding.crazyalarm.adapters.CustomAdapter;
 import com.n256coding.crazyalarm.database.DBHelper;
 import com.n256coding.crazyalarm.helper.AlarmActivator;
 import com.n256coding.crazyalarm.helper.DateEx;
@@ -100,7 +99,7 @@ public class Alarm implements Parcelable {
     public static boolean addAlarm(Context context, Alarm alarm) {
         DBHelper db = new DBHelper(context);
         if (db.insert(alarm)) {
-            AlarmActivator.activeAlarm(context, alarm);
+            AlarmActivator.activateAlarm(context, alarm);
             return true;
         }
         return false;
@@ -115,9 +114,9 @@ public class Alarm implements Parcelable {
         return false;
     }
 
-    public static boolean changeAlarm(Context context, Alarm newAlarm, Alarm oldAlarm){
+    public static boolean changeAlarm(Context context, Alarm newAlarm, Alarm oldAlarm) {
         DBHelper db = new DBHelper(context);
-        if(db.update(newAlarm, oldAlarm.getAlarmId())){
+        if (db.update(newAlarm, oldAlarm.getAlarmId())) {
             AlarmActivator.changeAlarm(context, newAlarm, oldAlarm);
             return true;
         }

@@ -27,7 +27,7 @@
             android:name=".AlarmViewerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_alarm_viewer"
-            android:theme="@style/FullscreenTheme"
+            android:theme="@style/AppTheme"
             android:excludeFromRecents="true"
             android:launchMode="singleTop"/>
 
