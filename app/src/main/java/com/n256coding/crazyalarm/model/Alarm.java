@@ -17,28 +17,39 @@ import java.util.List;
 public class Alarm implements Parcelable {
     private int alarmId;
     private Date alarmTime;
-    private String alarmText;
+    private String alarmStatus;
     private String alarmSound;
 
-    public Alarm(Date alarmTime, String alarmText, String alarmSound) {
-        this.alarmTime = alarmTime;
-        this.alarmText = alarmText;
-        this.alarmSound = alarmSound;
-    }
-
-    public Alarm(int alarmId, Date alarmTime, String alarmText, String alarmSound) {
-        this.alarmId = alarmId;
-        this.alarmTime = alarmTime;
-        this.alarmText = alarmText;
-        this.alarmSound = alarmSound;
-    }
+    public static final String ENABLED = "enabled";
+    public static final String DISABLED = "disabled";
 
     protected Alarm(Parcel in) {
-        alarmId = in.readInt();
-        alarmText = in.readString();
-        alarmSound = in.readString();
-        alarmTime = new Date(in.readLong());
+        this.alarmId = in.readInt();
+        this.alarmTime = new Date(in.readLong());
+        this.alarmStatus = in.readString();
+        this.alarmSound = in.readString();
     }
+
+    public Alarm() {
+        this.alarmId = -1;
+        this.alarmTime = new Date();
+        this.alarmStatus = "";
+        this.alarmSound = "Rooster";
+    }
+
+    public Alarm(Date alarmTime, String alarmStatus, String alarmSound) {
+        this.alarmTime = alarmTime;
+        this.alarmStatus = alarmStatus;
+        this.alarmSound = alarmSound;
+    }
+
+    public Alarm(int alarmId, Date alarmTime, String alarmStatus, String alarmSound) {
+        this.alarmId = alarmId;
+        this.alarmTime = alarmTime;
+        this.alarmStatus = alarmStatus;
+        this.alarmSound = alarmSound;
+    }
+
 
     public static final Creator<Alarm> CREATOR = new Creator<Alarm>() {
         @Override
@@ -68,12 +79,12 @@ public class Alarm implements Parcelable {
         this.alarmTime = alarmTime;
     }
 
-    public String getAlarmText() {
-        return alarmText;
+    public String getAlarmStatus() {
+        return alarmStatus;
     }
 
-    public void setAlarmText(String alarmText) {
-        this.alarmText = alarmText;
+    public void setAlarmStatus(String alarmStatus) {
+        this.alarmStatus = alarmStatus;
     }
 
     public String getAlarmSound() {
@@ -96,9 +107,38 @@ public class Alarm implements Parcelable {
         return alarmList;
     }
 
+    public static Alarm getAlarmById(Context context, int alarmId) {
+        DBHelper alarmDatabase = new DBHelper(context);
+        Cursor alarms = alarmDatabase.getAlarmById(alarmId);
+        Alarm alarm = null;
+        while (alarms.moveToNext()) {
+            alarm = new Alarm(alarms.getInt(alarms.getColumnIndex("alarm_id")),
+                    new Date(alarms.getLong(alarms.getColumnIndex("alarm_date"))),
+                    alarms.getString(alarms.getColumnIndex("alarm_status")),
+                    alarms.getString(alarms.getColumnIndex("alarm_sound")));
+        }
+        return alarm;
+    }
+
+    public static String getAlarmStatusById(Context context, int alarmId){
+        DBHelper db = new DBHelper(context);
+        Cursor results = db.getAlarmStatusById(alarmId);
+        String status = "";
+        while (results.moveToNext()){
+            status = results.getString(results.getColumnIndex("alarm_status"));
+        }
+        return status;
+    }
+
+    public static boolean updateAlarmStatusById(Context context, String status, int alarmId){
+        DBHelper db = new DBHelper(context);
+        return db.updateAlarmStatusById(status, alarmId);
+    }
+
     public static boolean addAlarm(Context context, Alarm alarm) {
         DBHelper db = new DBHelper(context);
-        if (db.insert(alarm)) {
+        alarm.setAlarmId((int) db.insert(alarm));
+        if (alarm.getAlarmId() != -1) {
             AlarmActivator.activateAlarm(context, alarm);
             return true;
         }
@@ -114,10 +154,10 @@ public class Alarm implements Parcelable {
         return false;
     }
 
-    public static boolean changeAlarm(Context context, Alarm newAlarm, Alarm oldAlarm) {
+    public static boolean changeAlarm(Context context, Alarm newAlarm, int oldAlarmId) {
         DBHelper db = new DBHelper(context);
-        if (db.update(newAlarm, oldAlarm.getAlarmId())) {
-            AlarmActivator.changeAlarm(context, newAlarm, oldAlarm);
+        if (db.update(newAlarm, oldAlarmId)) {
+            AlarmActivator.changeAlarm(context, newAlarm, oldAlarmId);
             return true;
         }
         return false;
@@ -132,7 +172,7 @@ public class Alarm implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(alarmId);
         parcel.writeLong(alarmTime.getTime());
-        parcel.writeString(alarmText);
+        parcel.writeString(alarmStatus);
         parcel.writeString(alarmSound);
     }
 }

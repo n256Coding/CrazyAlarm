@@ -12,7 +12,7 @@ import java.util.Date;
 public class DateEx extends Date {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private static DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
 
     public DateEx(){
         super();
@@ -143,11 +143,12 @@ public class DateEx extends Date {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-        if(calendar.before(new Date())){
+        if(calendar.getTimeInMillis() < new Date().getTime()){
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return calendar.getTime();
     }
+
 
     /**
      * @param date String date Ex. 2017-9-3

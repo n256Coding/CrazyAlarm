@@ -30,6 +30,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         this.alarmList = alarmList;
     }
 
+    public void addItemToList(Alarm alarm){
+        this.alarmList.add(alarm);
+    }
+
     @Override
     public CustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_alarm, parent, false);
@@ -38,8 +42,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(CustomAdapter.ViewHolder holder, int position) {
-        holder.tvAlarmTime.setText(DateEx.getTimeString(alarmList.get(position).getAlarmTime()));
-        holder.itemView.setTag(alarmList.get(position).getAlarmId());
+        Alarm alarm = alarmList.get(position);
+        holder.tvAlarmTime.setText(DateEx.getTimeString(alarm.getAlarmTime()));
+        holder.itemView.setTag(alarm.getAlarmId());
+        if(alarm.getAlarmStatus().equals(Alarm.ENABLED)){
+            //TODO Check not coloring well
+            holder.itemView.setBackgroundColor(android.graphics.Color.argb(100, 100, 100, 100));
+        }
     }
 
     @Override
@@ -49,12 +58,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvAlarmTime;
-        Switch swAlarmStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvAlarmTime = itemView.findViewById(R.id.tv_alarmTime);
-            swAlarmStatus = itemView.findViewById(R.id.sw_alarmStatus);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,11 +70,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                             new TimePickerDialog.OnTimeSetListener() {
                                 @Override
                                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                                    Alarm oldAlarm = alarmList.get(getAdapterPosition());
+                                    int oldAlarmId = alarmList.get(getAdapterPosition()).getAlarmId();
                                     Alarm newAlarm = alarmList.get(getAdapterPosition());
                                     newAlarm.setAlarmTime(DateEx.getAlarmDateOf(hourOfDay, minute));
-                                    alarmList.set(getAdapterPosition(), oldAlarm);
-                                    Alarm.changeAlarm(timePicker.getContext(), newAlarm, oldAlarm);
+                                    newAlarm.setAlarmStatus(Alarm.ENABLED);
+                                    alarmList.set(getAdapterPosition(), newAlarm);
+                                    Alarm.changeAlarm(timePicker.getContext(), newAlarm, oldAlarmId);
                                     Toast.makeText(timePicker.getContext(), "Alarm Changed", Toast.LENGTH_LONG).show();
                                     notifyItemChanged(getAdapterPosition());
                                 }

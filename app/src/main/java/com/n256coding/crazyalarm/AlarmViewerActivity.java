@@ -9,11 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.n256coding.crazyalarm.helper.MathEquation;
+import com.n256coding.crazyalarm.model.Alarm;
 import com.n256coding.crazyalarm.services.AlarmService;
 
 import java.io.IOException;
@@ -32,6 +34,10 @@ public class AlarmViewerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_viewer);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         tvEquation = findViewById(R.id.tv_Equation);
         btnAnswer1 = findViewById(R.id.btn_ans1);
@@ -57,10 +63,12 @@ public class AlarmViewerActivity extends AppCompatActivity {
                 alarmService.removeNotification();
             }
             Intent intent = new Intent(AlarmViewerActivity.this, AlarmService.class);
+            Alarm alarm = (Alarm) getIntent().getExtras().get("alarm");
+            Alarm.updateAlarmStatusById(getApplicationContext(), Alarm.DISABLED, alarm.getAlarmId());
             stopService(intent);
             finish();
         } else {
-            Toast.makeText(AlarmViewerActivity.this, wrongAnswerHint, Toast.LENGTH_LONG).show();
+            Toast.makeText(AlarmViewerActivity.this, wrongAnswerHint, Toast.LENGTH_SHORT).show();
             fillEquationInfo();
         }
     }

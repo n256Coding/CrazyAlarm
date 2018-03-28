@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "Alarm";
     private static final String COL_1 = "alarm_id";
     private static final String COL_2 = "alarm_time";
-    private static final String COL_3 = "alarm_text";
+    private static final String COL_3 = "alarm_status";
     private static final String COL_4 = "alarm_sound";
 
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE "+TABLE_NAME+" (" +
@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
@@ -40,25 +40,38 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insert(Alarm alarm){
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
+    }
+
+    public long insert(Alarm alarm){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("alarm_time", DateEx.getDateTimeString(alarm.getAlarmTime()));
-        values.put("alarm_text", alarm.getAlarmText());
-        values.put("alarm_sound", alarm.getAlarmSound());
+        values.put(COL_2, DateEx.getDateTimeString(alarm.getAlarmTime()));
+        values.put(COL_3, alarm.getAlarmStatus());
+        values.put(COL_4, alarm.getAlarmSound());
 
-        return db.insert(TABLE_NAME, null, values) != 0;
+        return db.insert(TABLE_NAME, null, values);
     }
 
     public boolean update(Alarm alarm, int oldAlarmId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("alarm_time", DateEx.getDateTimeString(alarm.getAlarmTime()));
-        values.put("alarm_text", alarm.getAlarmText());
-        values.put("alarm_sound", alarm.getAlarmSound());
+        values.put(COL_2, DateEx.getDateTimeString(alarm.getAlarmTime()));
+        values.put(COL_3, alarm.getAlarmStatus());
+        values.put(COL_4, alarm.getAlarmSound());
 
-        return db.update(TABLE_NAME, values, "alarm_id = ?",
+        return db.update(TABLE_NAME, values, COL_1+" = ?",
                 new String[]{String.valueOf(oldAlarmId)}) != 0;
+    }
+
+    public boolean updateAlarmStatusById(String status, int alarmId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues(1);
+        values.put(COL_3, status);
+        return db.update(TABLE_NAME, values, COL_1+" = ?", new String[]{String.valueOf(alarmId)}) != 0;
     }
 
     public boolean delete(int alarmId){
@@ -70,5 +83,17 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE_NAME, new String[]{COL_1, COL_2, COL_3, COL_4},
                 null, null, null, null, null);
+    }
+
+    public Cursor getAlarmById(int alarmId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_NAME, new String[]{COL_1, COL_2, COL_3, COL_4}, COL_1+"=?",
+                new String[]{String.valueOf(alarmId)}, null, null, null);
+    }
+
+    public Cursor getAlarmStatusById(int alarmId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_NAME, new String[]{COL_3}, COL_1+"=?",
+                new String[]{String.valueOf(alarmId)}, null, null, null);
     }
 }

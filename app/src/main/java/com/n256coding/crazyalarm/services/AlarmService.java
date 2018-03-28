@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.n256coding.crazyalarm.AlarmViewerActivity;
 import com.n256coding.crazyalarm.R;
+import com.n256coding.crazyalarm.model.Alarm;
 
 import java.io.IOException;
 
@@ -43,6 +44,8 @@ public class AlarmService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         player = new MediaPlayer();
+        Alarm alarm = (Alarm) intent.getExtras().get("alarm");
+
         if (Build.VERSION.SDK_INT < 26) {
             player.setAudioStreamType(AudioManager.STREAM_ALARM);
         } else {
@@ -55,11 +58,19 @@ public class AlarmService extends Service {
         }
 
         try {
-            player.setDataSource(getApplicationContext(),
-                    Uri.parse("android.resource://" +
-                            getApplicationContext().getPackageName() +
-                            "/" + R.raw.rooster)
-            );
+            switch (alarm.getAlarmSound()){
+                case "Rooster" :
+                    player.setDataSource(getApplicationContext(),
+                            Uri.parse("android.resource://" +
+                                    getApplicationContext().getPackageName() +
+                                    "/" + R.raw.rooster));
+                    break;
+                case "Siren" :
+                    player.setDataSource(getApplicationContext(),
+                            Uri.parse("android.resource://" +
+                                    getApplicationContext().getPackageName() +
+                                    "/" + R.raw.siren));
+            }
         } catch (IOException e) {
             Log.e(TAG, "Error parsing alarm sound uri", e);
         }
