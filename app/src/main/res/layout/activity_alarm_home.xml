@@ -4,34 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.n256coding.crazyalarm.alarmHome">
 
-    <TextView
-        android:id="@+id/txt_home_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp"
-        android:textSize="32dp"
-        android:text="Crazy ALarm" />
 
     <Button
         android:id="@+id/btn_alarm_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_home_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="176dp"
-        android:text="START" />
+        android:layout_marginTop="260dp"
+        android:background="@drawable/button_style"
+        android:text="START"
+        android:textColor="@color/colorWhite"/>
 
-    <TextView
-        android:id="@+id/txt_home_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_home_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:fontFamily="casual"
-        android:text="Wake Up From Sleep" />
+
+
 </RelativeLayout>
