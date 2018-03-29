@@ -26,7 +26,7 @@ public class AlarmService extends Service {
     private static final String TAG = "AlarmService";
 
     private final AlarmServiceBinder mBinder = new AlarmServiceBinder();
-    private MediaPlayer player;
+    protected MediaPlayer player;
     private Vibrator vibrator;
     private NotificationManagerCompat notificationManager;
 
@@ -102,6 +102,8 @@ public class AlarmService extends Service {
         super.onDestroy();
         stopAlarmSound();
         removeNotification();
+        player.release();
+        player = null;
         Log.i(TAG, "Service destroyed");
 
         //TODO Remove toast message
@@ -127,5 +129,7 @@ public class AlarmService extends Service {
     public void removeNotification() {
         notificationManager.cancel(0);
     }
+
+
 
 }

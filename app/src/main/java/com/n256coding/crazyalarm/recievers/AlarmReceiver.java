@@ -3,17 +3,12 @@ package com.n256coding.crazyalarm.recievers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.PowerManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.n256coding.crazyalarm.AlarmViewerActivity;
-import com.n256coding.crazyalarm.helper.AlarmActivator;
 import com.n256coding.crazyalarm.helper.AlarmLoader;
 import com.n256coding.crazyalarm.model.Alarm;
 import com.n256coding.crazyalarm.services.AlarmService;
-
-import java.text.ParseException;
 
 public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmReceiver";
@@ -23,7 +18,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         Log.i(TAG, "Receiver received alarms");
 
         if(intent.getAction().equals("android.intent.action.BOOT_COMPLETED")){
-            //TODO Check after booting alarms
             AlarmLoader alarmLoader = new AlarmLoader();
             alarmLoader.execute(context);
             return;

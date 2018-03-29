@@ -1,8 +1,9 @@
 package com.n256coding.crazyalarm;
 
 import android.app.TimePickerDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,16 +14,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.n256coding.crazyalarm.callbacks.AlarmListChangeListener;
 import com.n256coding.crazyalarm.helper.DateEx;
 import com.n256coding.crazyalarm.model.Alarm;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class AlarmEditorActivity extends AppCompatActivity implements
         View.OnClickListener, AdapterView.OnItemSelectedListener{
+    private static final String TAG = "AlarmEditorActivity";
     TextView txtAlarmTime;
     Spinner spinnerSounds;
     Button btnAddAlarm;
@@ -34,6 +36,7 @@ public class AlarmEditorActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_editor);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtAlarmTime = findViewById(R.id.txtAlarmTime);
         spinnerSounds = findViewById(R.id.spinnerAlarmSounds);
@@ -49,8 +52,18 @@ public class AlarmEditorActivity extends AppCompatActivity implements
 
         if(getIntent().hasExtra("oldAlarmId")){
             oldAlarmId = getIntent().getIntExtra("oldAlarmId", -1);
-            alarm = Alarm.getAlarmById(getApplicationContext(), oldAlarmId);
-            spinnerSounds.setSelection(alarm.getAlarmId());
+            try {
+                alarm = Alarm.getAlarmById(getApplicationContext(), oldAlarmId);
+            } catch (ParseException e) {
+                Log.e(TAG, "Error while parsing date from database", e);
+            }
+            switch (alarm.getAlarmSound()){
+                case "Rooster":
+                    spinnerSounds.setSelection(0);
+                    break;
+                case "Siren":
+                    spinnerSounds.setSelection(1);
+            }
             txtAlarmTime.setText(DateEx.getTimeString(alarm.getAlarmTime()));
         }else{
             alarm = new Alarm();
@@ -87,12 +100,15 @@ public class AlarmEditorActivity extends AppCompatActivity implements
     public void commitAlarm(View view){
         if(this.alarm.getAlarmId() == -1){
             if(Alarm.addAlarm(getApplicationContext(), this.alarm)) {
-                Toast.makeText(AlarmEditorActivity.this, "Alarm placed", Toast.LENGTH_LONG).show();
+                Toast.makeText(AlarmEditorActivity.this, "Alarm placed for "+DateEx.getDateTimeString(this.alarm.getAlarmTime()), Toast.LENGTH_LONG).show();
+                finish();
             }
         }
         else{
+            this.alarm.setAlarmStatus(Alarm.ENABLED);
             if(Alarm.changeAlarm(getApplicationContext(), this.alarm, this.oldAlarmId)){
-                Toast.makeText(AlarmEditorActivity.this, "Alarm updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(AlarmEditorActivity.this, "Alarm placed for "+DateEx.getDateTimeString(this.alarm.getAlarmTime()), Toast.LENGTH_LONG).show();
+                finish();
             }
         }
     }

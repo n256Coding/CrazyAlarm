@@ -1,17 +1,16 @@
 package com.n256coding.crazyalarm.adapters;
 
-import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
+import com.n256coding.crazyalarm.AlarmEditorActivity;
 import com.n256coding.crazyalarm.R;
 import com.n256coding.crazyalarm.helper.DateEx;
 import com.n256coding.crazyalarm.model.Alarm;
@@ -41,14 +40,62 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(CustomAdapter.ViewHolder holder, int position) {
-        Alarm alarm = alarmList.get(position);
+    public void onBindViewHolder(final CustomAdapter.ViewHolder holder, int position) {
+        final Alarm alarm = alarmList.get(position);
         holder.tvAlarmTime.setText(DateEx.getTimeString(alarm.getAlarmTime()));
         holder.itemView.setTag(alarm.getAlarmId());
+
         if(alarm.getAlarmStatus().equals(Alarm.ENABLED)){
-            //TODO Check not coloring well
-            holder.itemView.setBackgroundColor(android.graphics.Color.argb(100, 100, 100, 100));
+            holder.itemView.setBackgroundColor(android.graphics.Color.argb(50, 100, 100, 100));
+            holder.btnAlarmStatus.setVisibility(View.VISIBLE);
+        }else{
+            holder.itemView.setBackgroundColor(android.graphics.Color.argb(0, 100, 100, 100));
+            holder.btnAlarmStatus.setVisibility(View.INVISIBLE);
         }
+
+        holder.btnAlarmStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Alarm.disableAlarm(view.getContext().getApplicationContext(), alarm.getAlarmId());
+                Alarm tempAlarm = alarm;
+                tempAlarm.setAlarmStatus(Alarm.DISABLED);
+                alarmList.set(holder.getAdapterPosition(), tempAlarm.getClone());
+                tempAlarm = null;
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int alarmId = alarmList.get(holder.getAdapterPosition()).getAlarmId();
+                Intent intent = new Intent(view.getContext().getApplicationContext(), AlarmEditorActivity.class);
+                intent.putExtra("oldAlarmId", alarmId);
+                view.getContext().startActivity(intent);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View view) {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.alarm_item_context_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if(menuItem.getItemId() == R.id.menuItemRemove){
+                            Alarm.removeAlarm(view.getContext(),
+                                    Integer.parseInt(String.valueOf(view.getTag())));
+                            alarmList.remove(holder.getAdapterPosition());
+                            notifyItemRemoved(holder.getAdapterPosition());
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -58,56 +105,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvAlarmTime;
+        Button btnAlarmStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvAlarmTime = itemView.findViewById(R.id.tv_alarmTime);
+            btnAlarmStatus = itemView.findViewById(R.id.btnAlarmStatus);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TimePickerDialog timePicker = new TimePickerDialog(view.getContext(),
-                            new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                                    int oldAlarmId = alarmList.get(getAdapterPosition()).getAlarmId();
-                                    Alarm newAlarm = alarmList.get(getAdapterPosition());
-                                    newAlarm.setAlarmTime(DateEx.getAlarmDateOf(hourOfDay, minute));
-                                    newAlarm.setAlarmStatus(Alarm.ENABLED);
-                                    alarmList.set(getAdapterPosition(), newAlarm);
-                                    Alarm.changeAlarm(timePicker.getContext(), newAlarm, oldAlarmId);
-                                    Toast.makeText(timePicker.getContext(), "Alarm Changed", Toast.LENGTH_LONG).show();
-                                    notifyItemChanged(getAdapterPosition());
-                                }
-                            },
-                            DateEx.getCurrentHourOfDay(),
-                            DateEx.getCurrentMinute(), false
-                    );
-                    timePicker.show();
-                }
-            });
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(final View view) {
-                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
-                    popupMenu.getMenuInflater().inflate(R.menu.alarm_item_context_menu, popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            if(menuItem.getItemId() == R.id.menuItemRemove){
-                                Alarm.removeAlarm(view.getContext(),
-                                        Integer.parseInt(String.valueOf(view.getTag())));
-                                alarmList.remove(getAdapterPosition());
-                                notifyItemRemoved(getAdapterPosition());
-                            }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                    return false;
-                }
-            });
 
 
         }

@@ -18,8 +18,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <Switch
+    <Button
+        android:id="@+id/btnAlarmStatus"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="10dp"
+        android:text="Disable"
+        android:visibility="invisible" />
 </LinearLayout>

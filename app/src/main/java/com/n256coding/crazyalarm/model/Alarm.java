@@ -95,28 +95,39 @@ public class Alarm implements Parcelable {
         this.alarmSound = alarmSound;
     }
 
+    public Alarm getClone(){
+        Alarm alarm = new Alarm();
+        alarm.setAlarmId(this.alarmId);
+        alarm.setAlarmTime(this.alarmTime);
+        alarm.setAlarmStatus(this.alarmStatus);
+        alarm.setAlarmSound(this.alarmSound);
+        return alarm;
+    }
+
     public static List<Alarm> getAllAlarms(Context context) throws ParseException {
         List<Alarm> alarmList = new ArrayList<>();
         DBHelper alarmDatabase = new DBHelper(context);
         Cursor alarms = alarmDatabase.getAllAlarms();
         while (alarms.moveToNext()) {
-            alarmList.add(new Alarm(alarms.getInt(0), DateEx.getDateOfDateTime(alarms.getString(1)),
+            alarmList.add(new Alarm(alarms.getInt(0),
+                    DateEx.getDateOfDateTime(alarms.getString(1)),
                     alarms.getString(2), alarms.getString(3)));
         }
         alarmDatabase.close();
         return alarmList;
     }
 
-    public static Alarm getAlarmById(Context context, int alarmId) {
+    public static Alarm getAlarmById(Context context, int alarmId) throws ParseException {
         DBHelper alarmDatabase = new DBHelper(context);
         Cursor alarms = alarmDatabase.getAlarmById(alarmId);
         Alarm alarm = null;
         while (alarms.moveToNext()) {
             alarm = new Alarm(alarms.getInt(alarms.getColumnIndex("alarm_id")),
-                    new Date(alarms.getLong(alarms.getColumnIndex("alarm_date"))),
+                    DateEx.getDateOfDateTime(alarms.getString(alarms.getColumnIndex("alarm_time"))),
                     alarms.getString(alarms.getColumnIndex("alarm_status")),
                     alarms.getString(alarms.getColumnIndex("alarm_sound")));
         }
+        alarmDatabase.close();
         return alarm;
     }
 
@@ -127,17 +138,21 @@ public class Alarm implements Parcelable {
         while (results.moveToNext()){
             status = results.getString(results.getColumnIndex("alarm_status"));
         }
+        db.close();
         return status;
     }
 
     public static boolean updateAlarmStatusById(Context context, String status, int alarmId){
         DBHelper db = new DBHelper(context);
-        return db.updateAlarmStatusById(status, alarmId);
+        boolean result = db.updateAlarmStatusById(status, alarmId);
+        db.close();
+        return result;
     }
 
     public static boolean addAlarm(Context context, Alarm alarm) {
         DBHelper db = new DBHelper(context);
         alarm.setAlarmId((int) db.insert(alarm));
+        db.close();
         if (alarm.getAlarmId() != -1) {
             AlarmActivator.activateAlarm(context, alarm);
             return true;
@@ -148,18 +163,33 @@ public class Alarm implements Parcelable {
     public static boolean removeAlarm(Context context, int alarmId) {
         DBHelper db = new DBHelper(context);
         if (db.delete(alarmId)) {
+            db.close();
             AlarmActivator.cancelAlarm(context, alarmId);
             return true;
         }
+        db.close();
+        return false;
+    }
+
+    public static boolean disableAlarm(Context context, int alarmId){
+        DBHelper db = new DBHelper(context);
+        if(db.updateAlarmStatusById(Alarm.DISABLED, alarmId)){
+            db.close();
+            AlarmActivator.cancelAlarm(context, alarmId);
+            return true;
+        }
+        db.close();
         return false;
     }
 
     public static boolean changeAlarm(Context context, Alarm newAlarm, int oldAlarmId) {
         DBHelper db = new DBHelper(context);
         if (db.update(newAlarm, oldAlarmId)) {
+            db.close();
             AlarmActivator.changeAlarm(context, newAlarm, oldAlarmId);
             return true;
         }
+        db.close();
         return false;
     }
 
