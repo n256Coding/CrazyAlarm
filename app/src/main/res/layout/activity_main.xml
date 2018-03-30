@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
+    android:background="@drawable/back1"
     tools:context="com.n256coding.crazyalarm.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_alarmList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/back1"
     tools:context="com.n256coding.crazyalarm.alarmHome">
 
 
@@ -12,12 +11,53 @@
         android:id="@+id/btn_alarm_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_home_description"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="82dp"
+        android:width="300dp"
+        android:fontFamily="monospace"
+        android:textSize="20dp"
         android:background="@drawable/button_style"
-        android:text="START"
+        android:text="start alarm"
+        android:textColor="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/txt_home_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="67dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Crazy Alarm"
+        android:textColor="@color/colorWhite"
+        android:textSize="60dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_home_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txt_home_title"
+        android:layout_below="@+id/txt_home_title"
+        android:layout_marginTop="64dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Won't let you fall back a sleep"
+        android:textColor="@color/colorWhite"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txt_home_title"
+        android:layout_below="@+id/btn_alarm_home"
+        android:layout_marginTop="26dp"
+        android:width="300dp"
+        android:fontFamily="monospace"
+        android:textSize="20dp"
+        android:background="@drawable/button_style"
+        android:text="Exit"
         android:textColor="@color/colorWhite"/>
-
-
 
 </RelativeLayout>
