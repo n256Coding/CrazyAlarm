@@ -5,4 +5,12 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="solve_title">Wake Up !!!!!!!!!!</string>
+    <string name="alarm_time">Alarm Time</string>
+    <string name="default_alarm_time_string">12:25 PM</string>
+    <string name="alarm_tone">Alarm Tone</string>
+    <string name="set_alarm">set</string>
+    <string name="crazy_alarm_title">Crazy Alarm</string>
+    <string name="equation_title">Equation</string>
+    <string name="listitem_alarm_time">Alarm Time</string>
+    <string name="listitem_cancel_alarm">Cancel</string>
 </resources>

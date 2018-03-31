@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.n256coding.crazyalarm.helper.MathEquation;
 import com.n256coding.crazyalarm.model.Alarm;
+import com.n256coding.crazyalarm.model.MathEquation;
 import com.n256coding.crazyalarm.services.AlarmService;
 
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class AlarmViewerActivity extends AppCompatActivity {
     }
 
     private void fillEquationInfo() {
-        mathEquation.refreshEquation();
+        mathEquation.generateEquation();
         tvEquation.setText(mathEquation.toString().concat(" = ?"));
         btnAnswer1.setText(String.valueOf(mathEquation.getAnswerChoice(0)));
         btnAnswer2.setText(String.valueOf(mathEquation.getAnswerChoice(1)));

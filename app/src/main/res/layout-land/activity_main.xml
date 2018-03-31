@@ -8,31 +8,41 @@
     android:background="@drawable/back1"
     tools:context="com.n256coding.crazyalarm.MainActivity">
 
-    <TextClock
-        android:id="@+id/textClock"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/crazy_alarm_title"
+        android:textColor="@color/colorFont6"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/lv_alarmList"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.tomerrosenfeld.customanalogclockview.CustomAnalogClock
+        android:id="@+id/analog_clock"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="serif-monospace"
-        android:textAlignment="viewStart"
-        android:textColor="@color/colorWhite"
-        android:textSize="50sp"
-        android:textStyle="bold"
+        app:default_watchface="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/lv_alarmList"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_alarmList"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="0dp"
         android:background="@color/transparentWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textClock" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_addAlarm"

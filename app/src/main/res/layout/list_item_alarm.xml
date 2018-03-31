@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:text="Alarm Time"
-        android:textColor="@color/colorWhite"
+        android:text="@string/listitem_alarm_time"
+        android:textColor="@color/black_overlay"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -25,6 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginEnd="10dp"
-        android:text="Disable"
+        android:text="@string/listitem_cancel_alarm"
         android:visibility="invisible" />
 </LinearLayout>

@@ -1,8 +1,12 @@
-package com.n256coding.crazyalarm.helper;
+package com.n256coding.crazyalarm.model;
 
 
 import java.util.Random;
 
+/**
+ * This class represents the mathematical equation which given at the alarm time.
+ * Simply this will create a random mathematical equation and 1 answer with 3 wrong answers at the runtime.
+ */
 public class MathEquation {
     private Random random;
     private double[] equation;
@@ -18,10 +22,18 @@ public class MathEquation {
         generateEquation();
     }
 
+    /**
+     * generates a new mathematical equation
+     */
     public void generateEquation() {
-        equation[0] = random.nextInt(1000);
-        equation[1] = random.nextInt(1000);
         mathOperator = generateMathOperator();
+        if(mathOperator.equals("*")){
+            equation[0] = random.nextInt(50);
+            equation[1] = random.nextInt(50);
+        }else{
+            equation[0] = random.nextInt(1000);
+            equation[1] = random.nextInt(1000);
+        }
         switch (mathOperator) {
             case "+":
                 equation[2] = equation[0] + equation[1];
@@ -35,10 +47,17 @@ public class MathEquation {
         generateAnswers();
     }
 
+    /**
+     * Randomly select a math operator from +, - and *
+     * @return selected operator
+     */
     public String generateMathOperator() {
-        return mathOperators[random.nextInt(3)];
+        return mathOperators[random.nextInt(mathOperators.length)];
     }
 
+    /**
+     * Generate 1 correct answer and 3 wrong answers from generated equation
+     */
     public void generateAnswers() {
         int correctAnswerPosition = random.nextInt(4);
         for (int i = 0; i < answers.length; i++) {
@@ -50,6 +69,11 @@ public class MathEquation {
         }
     }
 
+    /**
+     * generate mostly similar but wrong answers to given correct answer
+     * @param number the correct answer
+     * @return likely similar answer
+     */
     public double getRelatedNumber(double number) {
         switch (random.nextInt(3)) {
             case 0:
@@ -64,14 +88,20 @@ public class MathEquation {
         return number;
     }
 
-    public void refreshEquation() {
-        generateEquation();
-    }
 
+    /**
+     * returns the correct answer for the current math equation
+     * @return correct answer
+     */
     public double getCorrectAnswer() {
         return equation[2];
     }
 
+    /**
+     * returns the generated answer value of the given index
+     * @param i index of the answer
+     * @return answer
+     */
     public double getAnswerChoice(int i) {
         if (i < 4) {
             return Math.round(answers[i] * 100) / 100;

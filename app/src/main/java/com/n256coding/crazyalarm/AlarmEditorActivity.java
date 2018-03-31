@@ -36,7 +36,6 @@ public class AlarmEditorActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_editor);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtAlarmTime = findViewById(R.id.txtAlarmTime);
         spinnerSounds = findViewById(R.id.spinnerAlarmSounds);
@@ -113,6 +112,7 @@ public class AlarmEditorActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

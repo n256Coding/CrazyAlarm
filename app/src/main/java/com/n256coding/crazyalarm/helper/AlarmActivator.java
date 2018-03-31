@@ -3,14 +3,11 @@ package com.n256coding.crazyalarm.helper;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 
 import com.n256coding.crazyalarm.model.Alarm;
-import com.n256coding.crazyalarm.recievers.AlarmReceiver;
 
 import java.text.ParseException;
 import java.util.List;

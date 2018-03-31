@@ -142,6 +142,11 @@ public class Alarm implements Parcelable {
         return status;
     }
 
+    /**
+     * Modifies the alarm status
+     * @param status could be "enabled" or "disabled"
+     * @return true if updated, else false
+     */
     public static boolean updateAlarmStatusById(Context context, String status, int alarmId){
         DBHelper db = new DBHelper(context);
         boolean result = db.updateAlarmStatusById(status, alarmId);
@@ -160,6 +165,12 @@ public class Alarm implements Parcelable {
         return false;
     }
 
+    /**
+     * Remove alarm from whole system including alarm manager tasks and database.
+     * @param context context
+     * @param alarmId id of the alarm to be removed
+     * @return true if removed, else false
+     */
     public static boolean removeAlarm(Context context, int alarmId) {
         DBHelper db = new DBHelper(context);
         if (db.delete(alarmId)) {
@@ -171,6 +182,14 @@ public class Alarm implements Parcelable {
         return false;
     }
 
+    /**
+     * Removes alarm from alarm manager's tasks but not from database.
+     * But change the status of alarm as "disabled" in database.
+     *
+     * @param context
+     * @param alarmId alarm id of the alarm which should be disabled
+     * @return
+     */
     public static boolean disableAlarm(Context context, int alarmId){
         DBHelper db = new DBHelper(context);
         if(db.updateAlarmStatusById(Alarm.DISABLED, alarmId)){
@@ -182,6 +201,13 @@ public class Alarm implements Parcelable {
         return false;
     }
 
+    /**
+     * Change the time of alarm and change it's status as "enabled".
+     * @param context
+     * @param newAlarm information of new alarm.
+     * @param oldAlarmId alarm id that needs to be modified.
+     * @return true if changed, else false
+     */
     public static boolean changeAlarm(Context context, Alarm newAlarm, int oldAlarmId) {
         DBHelper db = new DBHelper(context);
         if (db.update(newAlarm, oldAlarmId)) {

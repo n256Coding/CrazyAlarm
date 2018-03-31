@@ -1,9 +1,6 @@
 package com.n256coding.crazyalarm;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +12,7 @@ import android.widget.TextClock;
 
 import com.n256coding.crazyalarm.adapters.CustomAdapter;
 import com.n256coding.crazyalarm.model.Alarm;
+import com.tomerrosenfeld.customanalogclockview.CustomAnalogClock;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView lvAlarmList;
     FloatingActionButton fabAddAlarm;
     TextClock clock;
+    CustomAnalogClock analogClock;
     private static final String TAG = "MainActivity";
     private CustomAdapter customAdapter;
 
@@ -37,8 +36,15 @@ public class MainActivity extends AppCompatActivity {
         lvAlarmList = findViewById(R.id.lv_alarmList);
         fabAddAlarm = findViewById(R.id.fab_addAlarm);
         clock = findViewById(R.id.textClock);
+        analogClock = findViewById(R.id.analog_clock);
 
-        clock.setFormat12Hour("h:mm:ss a");
+        switch (getResources().getConfiguration().orientation){
+            case 1:
+                clock.setFormat12Hour("h:mm:ss a");
+                break;
+            case 2:
+                analogClock.setAutoUpdate(true);
+        }
 
         List<Alarm> alarmList = new ArrayList<>();
         try {
