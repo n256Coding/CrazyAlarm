@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.n256coding.crazyalarm">
 
-    <!--TODO Request permission dynamically-->
+    <!-- TODO Request permission dynamically -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SET_ALARM" />
 
-        <!--TODO Should be removed application name and class at release-->
+    <!-- TODO Should be removed application name and class at release -->
     <application
         android:name=".LeakMonitor"
         android:allowBackup="true"
@@ -48,11 +48,12 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".AlarmEditorActivity" >
+        <activity android:name=".AlarmEditorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
+        <activity android:name=".alarmHome"></activity>
     </application>
 
 </manifest>

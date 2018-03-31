@@ -68,7 +68,7 @@ public class AlarmViewerActivity extends AppCompatActivity {
             stopService(intent);
             finish();
         } else {
-            Toast.makeText(AlarmViewerActivity.this, wrongAnswerHint, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), wrongAnswerHint, Toast.LENGTH_SHORT).show();
             fillEquationInfo();
         }
     }
@@ -97,7 +97,7 @@ public class AlarmViewerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(AlarmViewerActivity.this, "Solve the puzzle!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Solve the puzzle!", Toast.LENGTH_LONG).show();
     }
 
     private void startAlarmSound() throws IOException {

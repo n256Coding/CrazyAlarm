@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextClock;
 
 import com.n256coding.crazyalarm.adapters.CustomAdapter;
 import com.n256coding.crazyalarm.model.Alarm;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     RecyclerView lvAlarmList;
     FloatingActionButton fabAddAlarm;
+    TextClock clock;
     private static final String TAG = "MainActivity";
     private CustomAdapter customAdapter;
 
@@ -26,9 +28,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(getSupportActionBar() != null && getSupportActionBar().isShowing())
+            getSupportActionBar().hide();
 
         lvAlarmList = findViewById(R.id.lv_alarmList);
         fabAddAlarm = findViewById(R.id.fab_addAlarm);
+        clock = findViewById(R.id.textClock);
+
+        clock.setFormat12Hour("h:mm:ss a");
 
         List<Alarm> alarmList = new ArrayList<>();
         try {
