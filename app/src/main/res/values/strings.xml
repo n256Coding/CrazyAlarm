@@ -13,4 +13,9 @@
     <string name="equation_title">Equation</string>
     <string name="listitem_alarm_time">Alarm Time</string>
     <string name="listitem_cancel_alarm">Cancel</string>
+    <string name="btn_answer4">answer4</string>
+    <string name="btn_answer3">answer3</string>
+    <string name="btn_answer2">Answer2</string>
+    <string name="btn_answer1">Answer1</string>
+    <string name="my_alarms_title">My Alarms</string>
 </resources>

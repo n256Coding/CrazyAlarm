@@ -15,12 +15,13 @@
     <color name="colorFont2">#f57c00</color>
     <color name="colorFont3">#BF360C</color>
     <color name="colorFont4">#2D4C63</color>
-    <color name="colorFont5">#E0F7FA</color>
+    <color name="colorFont5">#e0f7fa</color>
     <color name="colorFont6">#fbe9e7</color>
     <color name="colorFont7">#18353F</color>
     <color name="colorFont8">#FFCCBC</color>
     <color name="colorFont9">#FF7043</color>
     <color name="colorFont10">#43a047</color>
 
-    <color name="transparentWhite">#c4ffffff</color>
+    <color name="transparentWhite">#c6ffffff</color>
+    <color name="transparentBlack">#bb000000</color>
 </resources>

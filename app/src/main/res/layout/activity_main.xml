@@ -8,13 +8,41 @@
     android:background="@drawable/back1"
     tools:context="com.n256coding.crazyalarm.MainActivity">
 
-    <TextClock
-        android:id="@+id/textClock"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/my_alarms_title"
+        android:textColor="@color/colorFont5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textClock" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:text="@string/crazy_alarm_title"
+        android:textAlignment="center"
+        android:textColor="@color/colorFont5"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:padding="8dp"
+        android:background="@color/transparentBlack"
         android:fontFamily="serif-monospace"
         android:textAlignment="viewStart"
         android:textColor="@color/colorWhite"
@@ -22,17 +50,20 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_alarmList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
         android:background="@color/transparentWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textClock" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_addAlarm"

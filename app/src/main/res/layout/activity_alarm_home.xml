@@ -16,7 +16,7 @@
         android:layout_marginTop="82dp"
         android:width="300dp"
         android:fontFamily="monospace"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:background="@drawable/button_style"
         android:text="start alarm"
         android:textColor="@color/colorWhite" />

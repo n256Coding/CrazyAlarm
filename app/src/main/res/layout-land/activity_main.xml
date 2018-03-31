@@ -9,6 +9,17 @@
     tools:context="com.n256coding.crazyalarm.MainActivity">
 
     <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/my_alarms_title"
+        android:textColor="@color/colorFont5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,10 +50,13 @@
         android:id="@+id/lv_alarmList"
         android:layout_width="350dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
         android:background="@color/transparentWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_addAlarm"
