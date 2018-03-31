@@ -1,0 +1,94 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back1"
+    tools:context="com.n256coding.crazyalarm.AlarmViewerActivity">
+
+
+    <Button
+        android:id="@+id/btn_ans1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:onClick="answerBtnClicked"
+        android:text="Answer1"
+        android:fontFamily="monospace"
+        android:background="@drawable/button_style"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Equation" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/solve_title"
+        android:textColor="@color/colorWhite"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_Equation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/btn_ans2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="answerBtnClicked"
+        android:text="Answer2"
+        android:fontFamily="monospace"
+        android:background="@drawable/button_style"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_ans1"
+        app:layout_constraintStart_toStartOf="@+id/btn_ans1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ans1" />
+
+    <Button
+        android:id="@+id/btn_ans3"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="8dp"
+        android:onClick="answerBtnClicked"
+        android:text="answer3"
+        android:fontFamily="monospace"
+        android:background="@drawable/button_style"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_ans2"
+        app:layout_constraintStart_toStartOf="@+id/btn_ans2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ans2" />
+
+    <Button
+        android:id="@+id/btn_ans4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="answerBtnClicked"
+        android:text="answer4"
+        android:fontFamily="monospace"
+        android:background="@drawable/button_style"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_ans3"
+        app:layout_constraintStart_toStartOf="@+id/btn_ans3"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ans3" />
+</android.support.constraint.ConstraintLayout>
