@@ -50,14 +50,14 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_home_title"
+        android:layout_alignStart="@+id/btn_alarm_home"
         android:layout_below="@+id/btn_alarm_home"
         android:layout_marginTop="26dp"
         android:width="300dp"
-        android:fontFamily="monospace"
-        android:textSize="20dp"
         android:background="@drawable/button_style"
+        android:fontFamily="monospace"
         android:text="Exit"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp" />
 
 </RelativeLayout>

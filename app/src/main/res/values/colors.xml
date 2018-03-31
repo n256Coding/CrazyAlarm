@@ -7,6 +7,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorLessWhite">#FFFAFAFA</color>
+    <color name="colorLessBlue">#c0f1f4f5</color>
 
     <color name="black_overlay">#66000000</color>
 

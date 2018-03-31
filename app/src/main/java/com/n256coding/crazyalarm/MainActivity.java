@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements AlarmListChangeLi
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AlarmEditorActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
 //                        new TimePickerDialog.OnTimeSetListener() {
 //                            @Override
@@ -94,5 +95,11 @@ public class MainActivity extends AppCompatActivity implements AlarmListChangeLi
         } catch (ParseException e) {
             Log.e(TAG, "Error while parsing time", e);
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

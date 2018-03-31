@@ -34,12 +34,12 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView2"
+        android:layout_alignStart="@+id/txtAlarmTime"
         android:layout_below="@+id/txtAlarmTime"
-        android:text="Sound"
+        android:layout_marginTop="20dp"
+        android:text="Alarm Tone"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-         />
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spinnerAlarmSounds"
@@ -47,20 +47,22 @@
         android:layout_height="50dp"
         android:layout_alignStart="@+id/textView4"
         android:layout_below="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        />
+        android:layout_marginTop="20dp"
+        android:background="@color/colorLessBlue"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnAddAlarm"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="199dp"
+        android:layout_width="150dp"
         android:layout_height="53dp"
         android:layout_below="@+id/spinnerAlarmSounds"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="67dp"
-        android:layout_toEndOf="@+id/textView2"
+        android:background="@drawable/button_style"
+        android:fontFamily="monospace"
         android:onClick="commitAlarm"
-        android:text="Set"
-        />
+        android:text="set"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp" />
 
 </RelativeLayout>
