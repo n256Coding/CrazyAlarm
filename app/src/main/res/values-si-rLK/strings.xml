@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Crazy Alarm </string>
+
+    <string name="title_activity_alarm_viewer">AlarmViewerActivity</string>
+    <string name="dummy_button">ඩමි බොත්තම</string>
+    <string name="dummy_content">ව්‍යාජ තොරතුරු</string>
+    <string name="solve_title">අවදි වන්න !!!!!!!!!!</string>
+    <string name="alarm_time">නාද වන වේලාව</string>
+    <string name="default_alarm_time_string">12:25 PM</string>
+    <string name="alarm_tone">නාදය</string>
+    <string name="set_alarm">සක්‍රීය කරන්න</string>
+    <string name="crazy_alarm_title">Crazy Alarm</string>
+    <string name="equation_title">සමීකරණය</string>
+    <string name="listitem_alarm_time">නාද වන වේලාව</string>
+    <string name="listitem_cancel_alarm">අවලංගු කරන්න</string>
+    <string name="btn_answer4">4පිළිතුර</string>
+    <string name="btn_answer3">3පිළිතුර</string>
+    <string name="btn_answer2">2පිළිතුර</string>
+    <string name="btn_answer1">1පිළිතුර</string>
+    <string name="my_alarms_title">මගේ එලාම් නාද</string>
+</resources>

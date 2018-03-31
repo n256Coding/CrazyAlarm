@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back1"
+    tools:context="com.n256coding.crazyalarm.AlarmEditorActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorWhite"
+        android:text="@string/alarm_time"
+        android:textSize="18sp"
+         />
+
+    <TextView
+        android:id="@+id/txtAlarmTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:text="@string/default_alarm_time_string"
+        android:textColor="@color/colorWhite"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtAlarmTime"
+        android:layout_below="@+id/txtAlarmTime"
+        android:layout_marginTop="20dp"
+        android:text="@string/alarm_tone"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/spinnerAlarmSounds"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorLessBlue"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnAddAlarm"
+        android:layout_width="150dp"
+        android:layout_height="53dp"
+        android:layout_below="@+id/spinnerAlarmSounds"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="67dp"
+        android:background="@drawable/button_style"
+        android:fontFamily="monospace"
+        android:onClick="commitAlarm"
+        android:text="@string/set_alarm"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
+</RelativeLayout>
